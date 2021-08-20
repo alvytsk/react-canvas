@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./App.less";
-import { Stage, Layer, Rect, Text, Circle, Line, Group } from "react-konva";
+import { Stage, Layer, Rect, Text, Line, Arrow } from "react-konva";
 
 const SCENE_BASE_WIDTH = 800;
 const SCENE_BASE_HEIGHT = 600;
-const SCENE_MAX_WIDTH = 1000;
-const SCENE_MAX_HEIGHT = 600;
+const SCENE_MAX_WIDTH = 1500;
+const SCENE_MAX_HEIGHT = 800;
 
 const App = () => {
   const [size, setSize] = React.useState({
@@ -154,7 +154,13 @@ const App = () => {
             }}
           />
 
-          <Line points={[220, 75, 320, 75]} stroke="black" strokeWidth={2} />
+          <Arrow
+            points={[220, 75, 320, 75]}
+            fill="black"
+            fillEnabled={true}
+            stroke="black"
+            strokeWidth={1}
+          />
         </Layer>
       </Stage>
     </div>
