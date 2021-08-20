@@ -2,7 +2,21 @@ import React, { useEffect, useState, useRef } from "react";
 import "./App.less";
 import { Stage, Layer, Rect, Text, Circle, Line, Group } from "react-konva";
 
+const SCENE_BASE_WIDTH = 800;
+const SCENE_BASE_HEIGHT = 600;
+const SCENE_MAX_WIDTH = 1000;
+const SCENE_MAX_HEIGHT = 600;
+
 const App = () => {
+  const [size, setSize] = React.useState({
+    width:
+      SCENE_MAX_WIDTH > window.innerWidth ? window.innerWidth : SCENE_MAX_WIDTH,
+    height:
+      SCENE_MAX_HEIGHT > window.innerHeight
+        ? window.innerWidth
+        : SCENE_MAX_HEIGHT,
+  });
+
   const [stateColor, setStateColor] = useState<string>("red");
   const stateRef = useRef(stateColor);
   stateRef.current = stateColor;
@@ -14,13 +28,33 @@ const App = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    const checkSize = () => {
+      setSize({
+        width:
+          SCENE_MAX_WIDTH > window.innerWidth
+            ? window.innerWidth
+            : SCENE_MAX_WIDTH,
+        height:
+          SCENE_MAX_HEIGHT > window.innerHeight
+            ? window.innerWidth
+            : SCENE_MAX_HEIGHT,
+      });
+    };
+
+    window.addEventListener("resize", checkSize);
+    return () => window.removeEventListener("resize", checkSize);
+  }, []);
+
+  const scale = size.width / SCENE_BASE_WIDTH;
+
   return (
     <div className="app">
       <Stage
-        width={window.innerWidth}
-        height={window.innerHeight}
-        scaleX={1.0}
-        scaleY={1.0}
+        width={size.width}
+        height={size.height}
+        scaleX={scale}
+        scaleY={scale}
       >
         <Layer>
           <Rect
