@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./App.less";
+import CanvasLayout from "./Canvas/CanvasLayout";
 import { Stage, Layer, Rect, Text, Line, Arrow } from "react-konva";
+import CanvasRect, { Status } from "./Canvas/CanvasRect";
 
 const SCENE_BASE_WIDTH = 800;
 const SCENE_BASE_HEIGHT = 600;
@@ -17,13 +19,15 @@ const App = () => {
         : SCENE_MAX_HEIGHT,
   });
 
-  const [stateColor, setStateColor] = useState<string>("red");
+  const [stateColor, setStateColor] = useState<Status>(Status.Normal);
   const stateRef = useRef(stateColor);
   stateRef.current = stateColor;
 
   useEffect(() => {
     const timer = setInterval(function () {
-      setStateColor(stateRef.current === "red" ? "green" : "red");
+      setStateColor(
+        stateRef.current === Status.Fault ? Status.Normal : Status.Fault
+      );
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
@@ -50,6 +54,7 @@ const App = () => {
 
   return (
     <div className="app">
+      <CanvasLayout />
       <Stage
         width={size.width}
         height={size.height}
@@ -160,6 +165,20 @@ const App = () => {
             fillEnabled={true}
             stroke="black"
             strokeWidth={1}
+          />
+
+          <CanvasRect
+            idName="test55"
+            x={300}
+            y={160}
+            width={200}
+            height={50}
+            text="Test component"
+            fontSize={15}
+            status={stateColor}
+            onClick={(event: any) => {
+              console.log(`${event.target.attrs.id} clicked`);
+            }}
           />
         </Layer>
       </Stage>
