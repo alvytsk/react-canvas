@@ -6,8 +6,8 @@ import CanvasRect, { Status } from "./Canvas/CanvasRect";
 
 const SCENE_BASE_WIDTH = 800;
 const SCENE_BASE_HEIGHT = 600;
-const SCENE_MAX_WIDTH = 1500;
-const SCENE_MAX_HEIGHT = 800;
+const SCENE_MAX_WIDTH = 1000;
+const SCENE_MAX_HEIGHT = 700;
 
 const App = () => {
   const [size, setSize] = React.useState({
